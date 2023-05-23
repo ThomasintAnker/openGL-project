@@ -16,6 +16,8 @@ public:
 public:
 	void activateShader();
 	void deleteShaders();
+private:
+	void compileErrors(unsigned int shader, const char* type);
 public:
 	GLuint ID;
 };

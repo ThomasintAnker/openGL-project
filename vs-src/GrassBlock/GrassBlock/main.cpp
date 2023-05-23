@@ -1,7 +1,9 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <stb/stb_image.h>
 
+#include "texture.h"
 #include "shader.h"
 #include "VAO.h"
 #include "VBO.h"
@@ -9,27 +11,25 @@
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
-#define WINDOW_NAME "Square"
-#define WINDOW_MODE NULL //NULL == Windowed
-#define WINDOW_SHARED_MODE NULL //NULL == Don't share resources
+#define WINDOW_NAME "Grass Block"
+#define WINDOW_MODE NULL		//NULL	== Windowed
+#define WINDOW_SHARED_MODE NULL //NULL	== Don't share resources
+#define SCALE 0.0f				//0		== Original size
 
 // Vertices coordinates
 GLfloat vertices[] =
-{
-	-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
-	0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
-	0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f, // Upper corner
-	-0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner left
-	0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner right
-	0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f // Inner down
+{ //	COORDINATES		/		COLORS		//
+	-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,	 0.0f, 0.0f,	// Lower left corner
+	-0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f,	 0.0f, 1.0f,	// Upper left corner
+	 0.5f,  0.5f, 0.0f,		0.0f, 0.0f, 1.0f,	 1.0f, 1.0f,	// Upper right corner
+	 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	 1.0f, 0.0f		// Lower left corner
 };
 
 // Indices for vertices order
 GLuint indices[] =
 {
-	0, 3, 5, // Lower left triangle
-	3, 2, 4, // Lower right triangle
-	5, 4, 1 // Upper triangle
+	0, 2, 1,	// Upper triangle
+	0, 3, 2		// Lower triangle
 };
 
 int main()
@@ -70,26 +70,37 @@ int main()
 	EBO ebo(indices, sizeof(indices));
 
 	// Link VBO to VAO
-	vao.linkVBO(vbo, 0);
+	vao.linkAttrib(vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), NULL);
+	vao.linkAttrib(vbo, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	vao.linkAttrib(vbo, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	// Unbind all to prevent accidental modification
 	vao.unbind();
 	vbo.unbind();
 	ebo.unbind();
 
+	// Get ID of uniform 'scale'
+	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+
+	Texture grass_block("GrassBlock.jpg", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+	grass_block.texUnit(shaderProgram, "tex0", 0);
+
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
 		// Specify background color
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 		// Tell OpenGL which Shader Program we want to use
 		shaderProgram.activateShader();
+		glUniform1f(uniID, SCALE);
+		// Bind texture to make sure it renders in
+		grass_block.bind();
 		// Tell opengl to use created program
 		// Bind VAO so opengl knows how to use it
 		vao.bind();
 		//  Draw triangles using GL_TRIANGLES, x amount of coordinates, indice datatype, index of indice 
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		// Swap back buffer with front buffer
 		glfwSwapBuffers(window);
 		// Poll all GLFW events
@@ -100,6 +111,7 @@ int main()
 	vao.deleteVAO();
 	vbo.deleteVBO();
 	ebo.deleteEBO();
+	grass_block.deleteTexture();
 	shaderProgram.deleteShaders();
 	// Destroy window
 	glfwDestroyWindow(window);
