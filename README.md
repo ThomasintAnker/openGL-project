@@ -5,7 +5,7 @@ Recreate above gif.
 - Week 4: Generate square
 - Week 5: Add textures
 - Week 6: 3D + Lighting?
-- Week 7: Camera
+- Week 7: Camera + lighting?
 
 ## References
 https://www.youtube.com/playlist?list=PLPaoO-vpZnumdcb4tZc4x5Q-v7CkrQ6M-

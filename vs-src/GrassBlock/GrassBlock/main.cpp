@@ -44,6 +44,7 @@ int main() {
 	// Create window
 	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME, WINDOW_MODE, WINDOW_SHARED_MODE);
 
+	// If no window created end execution
 	if (window == NULL) 
 	{
 		std::cout << "Failed to create glfwWindow" << std::endl;
@@ -103,7 +104,7 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 		// Specify background color
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		// Clear back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 		// Tell opengl to use created program
