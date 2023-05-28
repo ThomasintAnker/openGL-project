@@ -21,32 +21,55 @@
 
 // Vertices coordinates
 GLfloat vertices[] =
-{ //	COORDINATES		/		COLORS		//
+{ //	COORDINATES		/		COLORS		/	TEXTURE COORDS	//
+	// FRONT SQUARE
 	-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,	 0.0f, 0.0f,	// Front lower left corner	- 0
 	-0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f,	 0.0f, 1.0f,	// Front upper left corner	- 1
 	 0.5f,  0.5f, 0.0f,		0.0f, 0.0f, 1.0f,	 1.0f, 1.0f,	// Front upper right corner - 2
 	 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	 1.0f, 0.0f,	// Front lower right corner - 3 
+	 // BACK SQUARE
 	-0.5f, -0.5f, 1.0f,		1.0f, 0.0f, 0.0f,	 0.0f, 0.0f,	// Back lower left corner	- 4
 	-0.5f,  0.5f, 1.0f,		0.0f, 1.0f, 0.0f,	 0.0f, 1.0f,	// Back upper left corner	- 5
 	 0.5f,  0.5f, 1.0f,		0.0f, 0.0f, 1.0f,	 1.0f, 1.0f,	// Back upper right corner	- 6
 	 0.5f, -0.5f, 1.0f,		1.0f, 1.0f, 1.0f,	 1.0f, 0.0f,	// Back lower right corner	- 7
+	 // RIGHT SQUARE
+	 0.5f,  0.5f, 0.0f,		0.0f, 0.0f, 1.0f,	 1.0f, 1.0f,	// Front upper right corner	- 8
+	 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	 1.0f, 0.0f,	// Front lower right corner	- 9 
+	 0.5f,  0.5f, 1.0f,		0.0f, 0.0f, 1.0f,	 0.0f, 1.0f,	// Back upper right corner	- 10
+	 0.5f, -0.5f, 1.0f,		1.0f, 1.0f, 1.0f,	 0.0f, 0.0f,	// Back lower right corner	- 11
+	 // LEFT SQUARE
+	-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,	 0.0f, 0.0f,	// Front lower left corner	- 12
+	-0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f,	 0.0f, 1.0f,	// Front upper left corner	- 13
+	-0.5f, -0.5f, 1.0f,		1.0f, 0.0f, 0.0f,	 1.0f, 0.0f,	// Back lower left corner	- 14
+	-0.5f,  0.5f, 1.0f,		0.0f, 1.0f, 0.0f,	 1.0f, 1.0f,	// Back upper left corner	- 15
+	// UPPER SQUARE
+	-0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f,	 1.0f, 1.0f,	// Front upper left corner	- 16
+	 0.5f,  0.5f, 0.0f,		0.0f, 0.0f, 1.0f,	 1.0f, 1.0f,	// Front upper right corner	- 17
+	-0.5f,  0.5f, 1.0f,		0.0f, 1.0f, 0.0f,	 1.0f, 0.0f,	// Back upper left corner	- 18
+	 0.5f,  0.5f, 1.0f,		0.0f, 0.0f, 1.0f,	 1.0f, 0.0f,	// Back upper right corner	- 19
+	// LOWER SQUARE
+	-0.5f, -0.5f, 0.0f,		1.0f, 0.0f, 0.0f,	 0.0f, 0.0f,	// Front lower left corner	- 20
+	 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	 0.0f, 0.0f,	// Front lower right corner	- 21
+	-0.5f, -0.5f, 1.0f,		1.0f, 0.0f, 0.0f,	 0.0f, 0.0f,	// Back lower left corner	- 22
+	 0.5f, -0.5f, 1.0f,		1.0f, 1.0f, 1.0f,	 0.0f, 0.0f,	// Back lower right corner	- 23
+
 };
 
 // Indices for vertices order
 GLuint indices[] =
 {
 	0, 1, 2,	// Upper triangle - 1st square - Front
-	0, 2, 3,	// Lower triangle - 1st square
-	2, 3, 6,	// Upper triangle - 2nd square - Right
-	3, 6, 7,	// Lower triangle - 2nd square
+	0, 2, 3,	// Lower triangle - 1st square	
+	8, 10, 9,	// Upper triangle - 2nd square - Right
+	9, 10, 11,	// Lower triangle - 2nd square
 	5, 6, 7,	// Upper triangle - 3rd square - Back
 	4, 5, 7,	// Lower triangle - 3rd square 
-	1, 4, 5,	// Upper triangle - 4th square - Left
-	0, 1, 4,	// Lower triangle - 4th square
-	1, 2, 5,	// Upper triangle - 5th square - Upper
-	2, 5, 6,	// Lower triangle - 5th square
-	0, 3, 4,	// Upper triangle - 6th square - Lower
-	3, 4, 7		// Lower triangle - 6th square
+	14, 15, 13,	// Upper triangle - 4th square - Left
+	14, 13, 12,	// Lower triangle - 4th square
+	16, 17, 18,	// Upper triangle - 5th square - Upper
+	18, 17, 19,	// Lower triangle - 5th square
+	20, 21, 22,	// Upper triangle - 6th square - Lower
+	22, 21, 23	// Lower triangle - 6th square
 };
 
 int main()
@@ -117,7 +140,7 @@ int main()
 		shaderProgram.activateShader();
 
 		double crntTime = glfwGetTime();
-		if (crntTime - prevTime >= 0.025) {
+		if (crntTime - prevTime >= 0.002) {
 			rotation += 0.5f;
 			prevTime = crntTime;
 		}
