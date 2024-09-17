@@ -6,8 +6,3 @@ Recreate above gif.
 - Week 5: Add textures
 - Week 6: 3D + Lighting?
 - Week 7: Camera + lighting?
-
-## References
-https://www.youtube.com/playlist?list=PLPaoO-vpZnumdcb4tZc4x5Q-v7CkrQ6M-
-
-at 5:24 tutorial 9
